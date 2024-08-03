@@ -3,7 +3,7 @@
 # This script automatically changes wallpaper for Linux desktop using Hyprland as DP
 
 WAIT=300
-dir="${HOME}/background/desktop"
+dir=$1
 trans_type="any"
 
 # Define the function for setting wallpapers in Hyprland
@@ -16,13 +16,15 @@ set_wallpaper_hyprland() {
         for dp in $(hyprctl monitors | grep Monitor | awk -F'[ (]' '{print $2}'); do
             BG="$(find "$dir" -name '*.jpg' -o -name '*.png' | shuf -n1)"
             swww img "$BG" --transition-fps 244 --transition-type "$trans_type" --transition-duration 1 -o "$dp"
+	    sleep 1
         done
     else
         swww init
         for dp in $(hyprctl monitors | grep Monitor | awk -F'[ (]' '{print $2}'); do
             BG="$(find "$dir" -name '*.jpg' -o -name '*.png' | shuf -n1)"
             swww img "$BG" --transition-fps 244 --transition-type "$trans_type" --transition-duration 1 -o "$dp"
-        done
+            sleep 1
+	done
     fi
 }
 
